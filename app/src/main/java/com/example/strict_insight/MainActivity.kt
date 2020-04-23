@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.camerax_x.LuminosityAnalyzer
 import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Math.*
 import java.util.concurrent.Executors
 
@@ -107,8 +108,11 @@ class MainActivity : AppCompatActivity() {
             .build()
             // The analyzer can then be assigned to the instance
             .also {
-                it.setAnalyzer(executor, LuminosityAnalyzer {
-                    luma -> Log.d(TAG, "Average luminosity: $luma")
+                it.setAnalyzer(executor, LuminosityAnalyzer { luma ->
+                    runOnUiThread {
+                        analysisResults.text = "$luma"
+                    }
+                    Log.d(TAG, "Average luminosity: $luma")
                 })
 
             }
