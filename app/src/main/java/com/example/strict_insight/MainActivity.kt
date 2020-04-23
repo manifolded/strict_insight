@@ -16,6 +16,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.camerax_x.LuminosityAnalyzer
 import com.google.common.util.concurrent.ListenableFuture
 import java.lang.Math.*
 import java.util.concurrent.Executors
@@ -40,6 +41,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewFinder: PreviewView
     private lateinit var cameraProvider: ListenableFuture<ProcessCameraProvider>
 
+    companion object {
+        private const val TAG = "strict_insight"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,10 +107,10 @@ class MainActivity : AppCompatActivity() {
             .build()
             // The analyzer can then be assigned to the instance
             .also {
-                it.setAnalyzer(executor, ImageAnalysis.Analyzer { image ->
-
-                    Log.d("MainActivity", "Average luminosity: $image")
+                it.setAnalyzer(executor, LuminosityAnalyzer {
+                    luma -> Log.d(TAG, "Average luminosity: $luma")
                 })
+
             }
 
         val orientationEventListener = object : OrientationEventListener(this as Context) {
