@@ -108,11 +108,11 @@ class MainActivity : AppCompatActivity() {
             .build()
             // The analyzer can then be assigned to the instance
             .also {
-                it.setAnalyzer(executor, LuminosityAnalyzer { luma ->
+                it.setAnalyzer(executor, LumiCenter { lumi ->
                     runOnUiThread {
-                        analysisResults.text = "$luma"
+                        analysisResults.text = "${lumi.first}, ${lumi.second}"
                     }
-                    Log.d(TAG, "Average luminosity: $luma")
+                    Log.d(TAG, "Center of luminosity: $lumi")
                 })
 
             }
